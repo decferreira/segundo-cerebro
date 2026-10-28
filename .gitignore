@@ -1,0 +1,41 @@
+# Segundo Cérebro · o que nunca entra no repositório
+
+# sistema
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+.claude/settings.local.json
+
+# senha, chave e credencial, em qualquer variante
+.env*
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+credentials.json
+token.json
+service-account.json
+
+# planilha e exportação de sistema costumam trazer CPF e apólice de cliente.
+# o dado de cliente mora no sistema de gestão, não no cofre.
+*.csv
+*.xls
+*.xlsx
+*.sql
+
+# PDF de cliente (apólice, proposta, documento) fica fora.
+# a exceção é o manual deste modelo.
+*.pdf
+!_Sistema/manual/*.pdf
+
+# vídeo e áudio pesam e não são memória
+*.mp4
+*.mov
+*.m4a
+*.wav
+
+# ruído de ferramenta
+__pycache__/
+*.pyc
+node_modules/

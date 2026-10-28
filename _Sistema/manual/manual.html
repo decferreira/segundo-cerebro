@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Segundo Cérebro · Manual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --fundo:#F5F6F7; --papel:#FFFFFF; --tinta:#17293A; --tinta-2:#3E5263; --tinta-3:#6B7C8A;
+  --linha:#D8DEE3; --linha-2:#C3CCD3; --ouro:#A07E16; --ouro-vivo:#C9A227; --ouro-claro:#F3EBD3;
+  --serif:"Playfair",Cambria,"Liberation Serif",Georgia,serif;
+  --mono:"JetBrains Mono","Courier New",ui-monospace,monospace;
+}
+@page{size:A4;margin:0}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#E4E8EB}
+body{font-family:var(--serif);color:var(--tinta);font-size:10.6pt;line-height:1.55;font-optical-sizing:auto;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:210mm;height:297mm;margin:0 auto 10mm;background:var(--fundo);position:relative;overflow:hidden;padding:24mm 22mm 26mm;page-break-after:always;break-after:page}
+.page:last-child{page-break-after:auto;break-after:auto}
+@media print{html,body{background:var(--fundo)}.page{margin:0}}
+@media screen and (max-width:820px){.page{width:100%;height:auto;min-height:0;padding:28px 16px 64px;margin:0 0 12px}}
+
+/* rótulos e números: território da mono */
+.rotulo{font-family:var(--mono);font-size:7.6pt;letter-spacing:.16em;text-transform:uppercase;color:var(--ouro);font-weight:500}
+.num-sec{font-family:var(--mono);font-weight:700;font-size:44pt;line-height:1;color:var(--ouro);letter-spacing:-.02em}
+h1,h2,h3{font-family:var(--serif);font-weight:700;margin:0;color:var(--tinta);letter-spacing:-.01em}
+h2{font-size:27pt;line-height:1.08;margin-top:4mm;max-width:150mm;text-wrap:balance}
+h3{font-size:13pt;line-height:1.25;margin:0 0 1.5mm}
+.regua{width:18mm;height:1.2mm;background:var(--ouro);margin:5mm 0 7mm}
+p{margin:0 0 3.2mm}
+.lead{font-size:13pt;line-height:1.45;color:var(--tinta);max-width:150mm;font-weight:400}
+.mut{color:var(--tinta-2)}
+b,strong{font-weight:700}
+
+/* rodapé */
+.folio{position:absolute;left:22mm;right:22mm;bottom:12mm;display:flex;justify-content:space-between;font-family:var(--mono);font-size:6.8pt;letter-spacing:.14em;text-transform:uppercase;color:var(--tinta-3);border-top:.3mm solid var(--linha);padding-top:3mm}
+
+/* cartões e listas */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:5mm}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4mm}
+.card{background:var(--papel);border:.3mm solid var(--linha);border-radius:1.2mm;padding:5mm 5.5mm}
+.card .rotulo{display:block;margin-bottom:2mm}
+.card p:last-child{margin-bottom:0}
+.lista{list-style:none;margin:0;padding:0}
+.lista li{position:relative;padding-left:7mm;margin-bottom:2.6mm}
+.lista li::before{content:"";position:absolute;left:0;top:2.35mm;width:4mm;height:.5mm;background:var(--ouro)}
+.passos{list-style:none;margin:0;padding:0;counter-reset:p}
+.passos>li{counter-increment:p;display:grid;grid-template-columns:13mm 1fr;gap:3mm;padding:4mm 0;border-top:.3mm solid var(--linha)}
+.passos>li:first-child{border-top:0;padding-top:0}
+.passos>li::before{content:counter(p,decimal-leading-zero);font-family:var(--mono);font-weight:700;font-size:15pt;color:var(--ouro);line-height:1.15}
+.passos h3{font-size:12pt}
+.passos p{margin-bottom:2mm}
+
+/* tabela */
+table{width:100%;border-collapse:collapse;font-size:9.8pt}
+th{font-family:var(--mono);font-size:7pt;letter-spacing:.14em;text-transform:uppercase;color:var(--tinta-3);text-align:left;font-weight:500;padding:0 3mm 2.5mm 0;border-bottom:.4mm solid var(--tinta)}
+td{padding:3mm 3mm 3mm 0;border-bottom:.3mm solid var(--linha);vertical-align:top}
+td:first-child{font-weight:700;white-space:nowrap}
+td.fala{font-family:var(--mono);font-size:8.8pt;font-weight:500;color:var(--tinta);white-space:nowrap}
+
+/* comando e prompt */
+pre{font-family:var(--mono);font-size:8.4pt;line-height:1.55;background:var(--tinta);color:#EDF0EE;border-radius:1.2mm;padding:4mm 5mm;margin:2mm 0 3mm;white-space:pre-wrap;word-break:break-word}
+pre .c{color:var(--ouro-vivo)}
+code{font-family:var(--mono);font-size:8.6pt;background:var(--ouro-claro);color:var(--tinta);padding:.2mm 1.2mm;border-radius:.6mm}
+.prompt{font-size:8.3pt;padding:5mm 6mm}
+
+/* estrutura de pastas */
+.arvore{font-family:var(--mono);font-size:8.6pt;line-height:1.85}
+.arvore div{display:grid;grid-template-columns:38mm 1fr;border-bottom:.3mm dashed var(--linha);padding:.6mm 0}
+.arvore span:first-child{color:var(--tinta);font-weight:700}
+.arvore span:last-child{font-family:var(--serif);font-size:9.6pt;color:var(--tinta-2)}
+
+/* destaque */
+.nota{border-left:1.2mm solid var(--ouro);background:var(--papel);padding:4mm 5mm;margin:5mm 0}
+.nota p:last-child{margin:0}
+.citacao{font-size:17pt;line-height:1.3;font-style:italic;font-weight:500;max-width:145mm;margin:6mm 0}
+
+/* capa */
+.capa{padding:22mm 22mm 20mm;display:flex;flex-direction:column}
+.capa .topo{display:flex;justify-content:space-between;align-items:flex-start}
+.marca{font-family:var(--mono);font-size:8pt;letter-spacing:.2em;text-transform:uppercase;color:var(--tinta);font-weight:700}
+.marca small{display:block;font-weight:400;color:var(--tinta-3);letter-spacing:.16em;margin-top:1.2mm}
+.capa h1{font-size:60pt;line-height:.95;margin-top:84mm;font-weight:800;letter-spacing:-.025em}
+.capa h1 em{font-style:italic;font-weight:500;color:var(--ouro)}
+.capa .sub{font-size:16pt;line-height:1.35;margin-top:8mm;max-width:112mm;color:var(--tinta-2)}
+.capa .base{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;border-top:.4mm solid var(--tinta);padding-top:5mm}
+.capa .base .rotulo{color:var(--tinta)}
+.nos{position:absolute;pointer-events:none}
+.nos line{stroke:var(--ouro-vivo);stroke-width:1.1}
+.nos circle{fill:var(--fundo);stroke:var(--ouro-vivo);stroke-width:1.4}
+.nos circle.cheio{fill:var(--ouro-vivo)}
+
+/* sumário */
+.sumario{list-style:none;margin:0;padding:0}
+.sumario li{display:grid;grid-template-columns:14mm 1fr auto;align-items:baseline;padding:3.6mm 0;border-bottom:.3mm solid var(--linha);font-size:13pt}
+.sumario li span:first-child{font-family:var(--mono);color:var(--ouro);font-weight:700;font-size:10pt}
+.sumario li span:last-child{font-family:var(--mono);font-size:8pt;color:var(--tinta-3)}
+
+/* contracapa */
+.fim{background:var(--tinta);color:#EDF0EE}
+.fim h2,.fim h3{color:#FFFFFF}
+.fim .rotulo{color:var(--ouro-vivo)}
+.fim .regua{background:var(--ouro-vivo)}
+.fim .card{background:#1F3446;border-color:#2C4457;color:#EDF0EE}
+.fim pre{background:#0F1D2A}
+.fim .folio{color:#9FB0BE;border-top-color:#2C4457}
+.fim .mut{color:#B8C4CE}
+.fim .nos circle{fill:var(--tinta)}
+</style>
+</head>
+<body>
+
+<!-- 1 · capa -->
+<section class="page capa">
+  <svg class="nos" style="right:-22mm;top:16mm;width:118mm;height:118mm" viewBox="0 0 300 300" aria-hidden="true">
+    <line x1="60" y1="70" x2="150" y2="40"/><line x1="150" y1="40" x2="240" y2="95"/><line x1="60" y1="70" x2="120" y2="150"/>
+    <line x1="150" y1="40" x2="120" y2="150"/><line x1="120" y1="150" x2="240" y2="95"/><line x1="120" y1="150" x2="200" y2="215"/>
+    <line x1="240" y1="95" x2="200" y2="215"/><line x1="120" y1="150" x2="70" y2="240"/><line x1="200" y1="215" x2="70" y2="240"/>
+    <line x1="200" y1="215" x2="275" y2="260"/>
+    <circle cx="60" cy="70" r="6"/><circle class="cheio" cx="150" cy="40" r="7"/><circle cx="240" cy="95" r="6"/>
+    <circle class="cheio" cx="120" cy="150" r="9"/><circle cx="200" cy="215" r="7"/><circle cx="70" cy="240" r="5"/><circle class="cheio" cx="275" cy="260" r="5"/>
+  </svg>
+  <div class="topo">
+    <div class="marca">IA do Jeito Seguro<small>Manual de instalação e uso</small></div>
+    <div class="rotulo">Versão 1.0 · outubro de 2026</div>
+  </div>
+  <h1>Segundo<br><em>Cérebro</em></h1>
+  <p class="sub">A memória da sua corretora, num lugar que é seu. Um guia para instalar o seu e manter ele vivo.</p>
+  <div class="base">
+    <div><div class="rotulo">Por</div><div style="font-size:13pt;font-weight:700;margin-top:1mm">Denis Ferreira</div><div class="mut" style="font-size:9.5pt">corretor de seguros</div></div>
+    <div class="rotulo" style="text-align:right">github.com/decferreira/segundo-cerebro</div>
+  </div>
+</section>
+
+<!-- 2 · sumário -->
+<section class="page">
+  <div class="rotulo">Antes de tudo</div>
+  <h2>O que tem neste manual</h2>
+  <div class="regua"></div>
+  <ol class="sumario">
+    <li><span>01</span><span>Por que isso existe</span><span>p. 3</span></li>
+    <li><span>02</span><span>Como o cofre funciona</span><span>p. 4</span></li>
+    <li><span>03</span><span>Antes de começar</span><span>p. 5</span></li>
+    <li><span>04</span><span>Instalação, passo a passo</span><span>p. 6</span></li>
+    <li><span>05</span><span>A primeira sessão</span><span>p. 8</span></li>
+    <li><span>06</span><span>O dia a dia</span><span>p. 9</span></li>
+    <li><span>07</span><span>O jeito seguro</span><span>p. 10</span></li>
+    <li><span>08</span><span>Como manter vivo</span><span>p. 11</span></li>
+    <li><span>09</span><span>Os erros que mais acontecem</span><span>p. 12</span></li>
+  </ol>
+  <div class="nota" style="margin-top:12mm">
+    <p><b>Para quem é.</b> Para o corretor que usa IA, gosta do resultado e cansou de explicar tudo de novo a cada conversa. Não precisa saber programar. Precisa de uma hora livre e de vontade de responder perguntas sobre o próprio negócio.</p>
+    <p class="mut">Não é corretor? O cofre funciona igual para qualquer profissão. Na primeira sessão você conta o que faz, e o agente ajusta as pastas.</p>
+  </div>
+  <div class="folio"><span>IA do Jeito Seguro · Segundo Cérebro</span><span>02</span></div>
+</section>
+
+<!-- 3 · por que -->
+<section class="page">
+  <div class="num-sec">01</div>
+  <h2>Por que isso existe</h2>
+  <div class="regua"></div>
+  <p class="lead">Você abre o chat, explica quem é o cliente, como a seguradora trabalha, o que ficou combinado ontem. A resposta vem boa. Amanhã você abre outra conversa e explica tudo de novo.</p>
+  <p>O chat esquece. O prompt não acumula. Sem perceber, você virou o arquivo da sua própria IA, e ela só sabe o que você lembrou de contar naquela hora.</p>
+  <p class="citacao">Usar IA é uma coisa. Trabalhar com uma IA que lembra é outra.</p>
+  <table style="margin-top:4mm">
+    <thead><tr><th></th><th>Usar o chat</th><th>Ter um segundo cérebro</th></tr></thead>
+    <tbody>
+      <tr><td>Onde fica o contexto</td><td>na conversa e na sua cabeça</td><td>em arquivos que são seus</td></tr>
+      <tr><td>No dia seguinte</td><td>você explica de novo</td><td>ele já sabe</td></tr>
+      <tr><td>Quem lembra da renovação</td><td>você</td><td>ele avisa</td></tr>
+      <tr><td>Se você troca de ferramenta</td><td>começa do zero</td><td>leva a pasta junto</td></tr>
+    </tbody>
+  </table>
+  <div class="grid2" style="margin-top:9mm">
+    <div class="card"><span class="rotulo">O que ele é</span><p>Uma pasta com arquivos de texto simples, guardada no seu GitHub, que o seu agente de IA lê e escreve. Você abre qualquer arquivo num editor comum. Ninguém tira de você.</p></div>
+    <div class="card"><span class="rotulo">O que ele não resolve</span><p>Falta de clareza sobre o próprio negócio. Ele amplia o que você é. Se você tem duas prioridades que brigam entre si, ele vai lembrar das duas todo dia, com muita eficiência.</p></div>
+  </div>
+  <div class="folio"><span>IA do Jeito Seguro · Segundo Cérebro</span><span>03</span></div>
+</section>
+
+<!-- 4 · como funciona -->
+<section class="page">
+  <div class="num-sec">02</div>
+  <h2>Como o cofre funciona</h2>
+  <div class="regua"></div>
+  <p class="lead">Doze peças, cada uma com uma função. O agente sabe onde está cada coisa, então você diz o que quer e ele acha o caminho.</p>
+  <div class="arvore" style="margin:6mm 0 8mm">
+    <div><span>AGENTS.md</span><span>a porta de entrada: as regras que todo agente lê primeiro</span></div>
+    <div><span>CONSTITUICAO.md</span><span>quem você é, como o agente se comporta, o que ele nunca faz</span></div>
+    <div><span>FOCO.md</span><span>o que importa agora: a meta do trimestre e as prioridades da semana</span></div>
+    <div><span>0_Entrada/</span><span>captura rápida, esvaziada toda sexta</span></div>
+    <div><span>1_Projetos/</span><span>o que tem começo, meio e fim</span></div>
+    <div><span>2_Areas/</span><span>o que nunca termina: a corretora, a sua vida</span></div>
+    <div><span>3_Referencias/</span><span>seguradoras, produtos, modelos de mensagem</span></div>
+    <div><span>4_Arquivo/</span><span>o que encerrou, guardado com a lição aprendida</span></div>
+    <div><span>Diario/</span><span>um arquivo por dia, com o que aconteceu</span></div>
+    <div><span>Pessoas/</span><span>uma ficha por cliente, parceiro, assessor</span></div>
+    <div><span>Decisoes/</span><span>uma linha por decisão, com o porquê</span></div>
+    <div><span>_Sistema/</span><span>as rotinas, este manual e o verificador de escrita</span></div>
+  </div>
+  <div class="grid2">
+    <div class="card"><span class="rotulo">Projeto ou área</span><p>Projeto tem data para acabar: "campanha de vida em grupo de dezembro". Área não acaba: "comercial". Se você não sabe dizer quando termina, é área.</p></div>
+    <div class="card"><span class="rotulo">Um agente ou dois</span><p>O Claude Code e o Codex leem o mesmo <code>AGENTS.md</code>. Você pode usar um, o outro ou os dois. A memória é uma só.</p></div>
+  </div>
+  <div class="folio"><span>IA do Jeito Seguro · Segundo Cérebro</span><span>04</span></div>
+</section>
+
+<!-- 5 · antes de começar -->
+<section class="page">
+  <div class="num-sec">03</div>
+  <h2>Antes de começar</h2>
+  <div class="regua"></div>
+  <h3 style="margin-bottom:4mm">O que você precisa ter em mãos</h3>
+  <ul class="lista">
+    <li>Um computador com Mac ou Windows.</li>
+    <li>Uma conta gratuita no GitHub, que é onde o cofre vai morar.</li>
+    <li>Uma assinatura que dê acesso a um agente: Claude Pro ou Max, para usar o Claude Code, ou ChatGPT Plus ou Pro, para usar o Codex.</li>
+    <li>Uma hora sem interrupção para a instalação e a primeira conversa.</li>
+  </ul>
+  <h3 style="margin:9mm 0 4mm">Três decisões que valem para sempre</h3>
+  <div class="grid3">
+    <div class="card"><span class="rotulo">01 · O centro</span><p>O cofre é seu, não da corretora. A corretora é uma das suas frentes. Se ela for o centro, o sistema não enxerga a sua saúde, a sua família e o seu dinheiro, que são o que quebra primeiro quando o negócio aperta.</p></div>
+    <div class="card"><span class="rotulo">02 · Privado</span><p>O repositório no GitHub é privado desde o primeiro minuto. Confira antes de gravar qualquer coisa. O agente também confere e para se encontrar público.</p></div>
+    <div class="card"><span class="rotulo">03 · O cliente fora</span><p>CPF, apólice, dado bancário e saúde do cliente ficam no sistema de gestão. No cofre fica o nome, o jeito de atender e onde achar o resto.</p></div>
+  </div>
+  <div class="nota" style="margin-top:9mm">
+    <p><b>A pergunta de controle.</b> Antes de instalar, responda para você mesmo: se eu sumir por uma semana, o que precisa continuar acontecendo na corretora? A resposta é a lista das suas primeiras rotinas. O agente vai te perguntar isso também.</p>
+  </div>
+  <div class="folio"><span>IA do Jeito Seguro · Segundo Cérebro</span><span>05</span></div>
+</section>
+
+<!-- 6 · instalação 1 -->
+<section class="page">
+  <div class="num-sec">04</div>
+  <h2>Instalação, passo a passo</h2>
+  <div class="regua"></div>
+  <ol class="passos">
+    <li><div><h3>Crie a sua conta no GitHub</h3><p>Entre em <code>github.com/signup</code> e siga as telas. Guarde a senha e ative a verificação em duas etapas em Settings, depois Password and authentication.</p></div></li>
+    <li><div><h3>Faça a sua cópia do modelo</h3><p>Abra <code>github.com/decferreira/segundo-cerebro</code>. Clique no botão verde <b>Use this template</b> e depois em <b>Create a new repository</b>. Em <b>Repository name</b>, escreva <code>segundo-cerebro</code>. Marque <b>Private</b>. Clique em <b>Create repository</b>.</p></div></li>
+    <li><div><h3>Instale o agente</h3><p>Escolha um. No Mac, abra o Terminal (Cmd e espaço, digite Terminal, Enter). No Windows, abra o PowerShell pelo menu Iniciar.</p>
+      <p style="margin:3mm 0 1mm"><span class="rotulo">Claude Code · Mac</span></p>
+<pre>curl -fsSL https://claude.ai/install.sh | bash</pre>
+      <p style="margin:2mm 0 1mm"><span class="rotulo">Claude Code · Windows</span></p>
+<pre>irm https://claude.ai/install.ps1 | iex</pre>
+      <p style="margin:2mm 0 1mm"><span class="rotulo">Codex · Mac ou Windows, depois de instalar o Node.js LTS pelo nodejs.org</span></p>
+<pre>npm install -g @openai/codex</pre></div></li>
+    <li><div><h3>Abra o agente</h3><p>No mesmo Terminal, digite <code>claude</code> ou <code>codex</code> e aperte Enter. Na primeira vez ele abre o navegador para você entrar na sua conta.</p></div></li>
+  </ol>
+  <div class="folio"><span>IA do Jeito Seguro · Segundo Cérebro</span><span>06</span></div>
+</section>
+
+<!-- 7 · instalação 2 -->
+<section class="page">
+  <div class="rotulo">04 · Instalação, continuação</div>
+  <h2>O prompt de partida</h2>
+  <div class="regua"></div>
+  <ol class="passos" style="counter-reset:p 4">
+    <li><div><h3>Cole o prompt de partida</h3><p>Copie o bloco abaixo inteiro e cole no agente. Ele confere o que falta no computador, baixa o seu cofre e começa a primeira sessão. O texto também está no README do repositório, pronto para copiar.</p>
+<pre class="prompt">Quero instalar o meu segundo cérebro, o modelo da IA do Jeito Seguro. Eu não sou da área de tecnologia: me guie um passo por vez, explique em português simples o que cada passo faz e espere eu confirmar antes de seguir.
+
+1. Veja se este computador tem o Git e o GitHub CLI (o comando gh). Se faltar algum, instale do jeito certo para o meu sistema.
+2. Me ajude a entrar na minha conta do GitHub com o gh. O login no navegador eu faço.
+3. Liste os meus repositórios e confirme comigo qual é o segundo cérebro que eu criei a partir do modelo. Confira que ele é privado. Se estiver público, pare e me ensine a deixar privado antes de qualquer outra coisa.
+4. Baixe o repositório para a pasta segundo-cerebro dentro da minha pasta de usuário.
+5. Leia o AGENTS.md dessa pasta inteiro e siga as regras dele daqui em diante.
+6. Rode a skill primeira-sessao, que está em _Sistema/skills/primeira-sessao/SKILL.md.</pre></div></li>
+    <li><div><h3>Converse</h3><p>A primeira sessão leva uns 40 minutos. O que acontece nela está na próxima página.</p></div></li>
+    <li><div><h3>Do segundo dia em diante</h3><p>Abra o Terminal, entre na pasta do cofre e chame o agente:</p>
+<pre>cd ~/segundo-cerebro
+claude</pre>
+      <p>Troque <code>claude</code> por <code>codex</code> se for o seu caso. Depois, diga "bom dia".</p></div></li>
+  </ol>
+  <div class="folio"><span>IA do Jeito Seguro · Segundo Cérebro</span><span>07</span></div>
+</section>
+
+<!-- 8 · primeira sessão -->
+<section class="page">
+  <div class="num-sec">05</div>
+  <h2>A primeira sessão</h2>
+  <div class="regua"></div>
+  <p class="lead">Uma conversa, uma pergunta por vez. Você pode responder falando, pelo ditado do celular ou do computador. No fim, o cofre sabe quem você é e o que importa agora.</p>
+  <div class="grid2" style="margin-top:7mm">
+    <div class="card"><span class="rotulo">Bloco 1 · 10 min · Você</span><p>Nome, cidade, as frentes que você toca além da corretora, como é a sua semana de verdade e o que é sagrado na sua agenda.</p></div>
+    <div class="card"><span class="rotulo">Bloco 2 · 15 min · A corretora</span><p>Ramos, tamanho da carteira (chute vale), seguradoras, sistema de gestão, onde ficam as renovações e a tarefa que mais rouba o seu tempo.</p></div>
+    <div class="card"><span class="rotulo">Bloco 3 · 10 min · O combinado</span><p>Como você quer que ele fale com você, o que ele nunca deve fazer e o que deve fazer sem você pedir. As respostas viram regra na hora.</p></div>
+    <div class="card"><span class="rotulo">Bloco 4 · 5 min · O foco</span><p>O que precisa ter acontecido daqui a quatro semanas, as três prioridades desta e o gargalo de cada uma.</p></div>
+  </div>
+  <h3 style="margin:9mm 0 4mm">As regras que o agente segue na conversa</h3>
+  <ul class="lista">
+    <li>Uma pergunta por vez. Ele escuta a resposta antes de fazer a próxima.</li>
+    <li>"Não sei" encerra o assunto. Fica marcado como "a preencher" e a conversa segue.</li>
+    <li>Ele grava a cada três ou quatro respostas. Se a conversa cair, nada se perde.</li>
+    <li>Ele usa as suas palavras. Número que você chutou vira "estimativa", nunca fato.</li>
+  </ul>
+  <p class="mut" style="margin-top:6mm">Depois da primeira sessão vem a entrevista: seis conversas de 25 minutos, uma por vez, quando der. Ela tira da sua cabeça o que nenhum arquivo tem.</p>
+  <div class="folio"><span>IA do Jeito Seguro · Segundo Cérebro</span><span>08</span></div>
+</section>
+
+<!-- 9 · dia a dia -->
+<section class="page">
+  <div class="num-sec">06</div>
+  <h2>O dia a dia</h2>
+  <div class="regua"></div>
+  <p class="lead">Você não precisa decorar comando. Fala do jeito que falaria com um assistente, e cada frase chama uma rotina pronta.</p>
+  <table style="margin-top:6mm">
+    <thead><tr><th>Você diz</th><th>O que acontece</th></tr></thead>
+    <tbody>
+      <tr><td class="fala">"bom dia"</td><td>Ele lê o foco, o que ficou de ontem e o que vence, e devolve o dia em até quinze linhas, com uma sugestão do que fazer primeiro.</td></tr>
+      <tr><td class="fala">"anota isso"</td><td>Guarda a ideia, o recado ou o print na entrada. Você não organiza nada na hora.</td></tr>
+      <tr><td class="fala">"acabei a reunião"</td><td>Você cola a transcrição ou as suas anotações. Ele separa o que foi decidido, quem faz o quê até quando, e atualiza as fichas.</td></tr>
+      <tr><td class="fala">"o que vence"</td><td>Monta as renovações dos próximos 45 dias em três faixas e diz por onde começar.</td></tr>
+      <tr><td class="fala">"fecha o dia"</td><td>Registra no diário o que mudou e grava tudo no GitHub.</td></tr>
+      <tr><td class="fala">"acerto da semana"</td><td>Toda sexta: esvazia a entrada, revisa os projetos e reescreve o foco com você.</td></tr>
+    </tbody>
+  </table>
+  <div class="nota" style="margin-top:9mm">
+    <p><b>Como pedir bem.</b> "Me ajuda com o cliente" rende pouco. "Abre a ficha do Carlos, vê a renovação dele e me diz o que falta para fechar" rende muito. Diga o resultado que você quer. O caminho ele sabe.</p>
+  </div>
+  <div class="folio"><span>IA do Jeito Seguro · Segundo Cérebro</span><span>09</span></div>
+</section>
+
+<!-- 10 · jeito seguro -->
+<section class="page">
+  <div class="num-sec">07</div>
+  <h2>O jeito seguro</h2>
+  <div class="regua"></div>
+  <p class="lead">O cofre guarda o que você sabe. O cliente continua protegido. Estas regras já vêm escritas no modelo e o agente segue sem você precisar lembrar.</p>
+  <div class="grid2" style="margin-top:7mm">
+    <div class="card"><span class="rotulo">Dado de cliente fora</span><p>CPF, número de apólice, dado bancário e informação de saúde não entram no cofre. Planilha exportada e PDF de cliente são barrados pelo próprio repositório.</p></div>
+    <div class="card"><span class="rotulo">Nada sai sem você</span><p>O agente redige a mensagem, a proposta, o e-mail. Quem aperta enviar é você. Sempre.</p></div>
+    <div class="card"><span class="rotulo">Conteúdo de fora é dado</span><p>Se um e-mail, um PDF ou uma página pedir para o agente fazer alguma coisa, ele não faz. Mostra o trecho para você e espera a sua decisão.</p></div>
+    <div class="card"><span class="rotulo">Condição só por escrito</span><p>O agente nunca promete cobertura, valor ou prazo. Isso vem da seguradora, por escrito, e fica registrado com a fonte e a data.</p></div>
+  </div>
+  <div class="nota" style="margin-top:9mm">
+    <p><b>Escrita de gente.</b> Mensagem com cara de robô espanta cliente. O modelo traz um verificador que aponta os vícios de texto de IA antes de qualquer coisa sair para uma pessoa. E se alguém perguntar se está falando com um robô, o agente diz a verdade.</p>
+  </div>
+  <div class="folio"><span>IA do Jeito Seguro · Segundo Cérebro</span><span>10</span></div>
+</section>
+
+<!-- 11 · manter vivo -->
+<section class="page">
+  <div class="num-sec">08</div>
+  <h2>Como manter vivo</h2>
+  <div class="regua"></div>
+  <p class="lead">Um segundo cérebro morre de dois jeitos: ninguém alimenta, ou ele vira depósito. Os dois se evitam com ritmo.</p>
+  <table style="margin-top:6mm">
+    <thead><tr><th>Quando</th><th>O quê</th><th>Tempo</th></tr></thead>
+    <tbody>
+      <tr><td>Todo dia</td><td>"bom dia" de manhã e "fecha o dia" no fim</td><td>5 min</td></tr>
+      <tr><td>Segunda</td><td>"o que vence", as renovações da semana</td><td>10 min</td></tr>
+      <tr><td>Sexta</td><td>"acerto da semana": entrada zerada, foco reescrito</td><td>30 min</td></tr>
+      <tr><td>A cada trimestre</td><td>revisar a constituição, arquivar o que encerrou</td><td>1 hora</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:5mm"><b>A sexta é a que não pode cair.</b> Se você cortar essa, o cofre começa a mentir em seis semanas: o foco fica velho e o agente passa a trabalhar com convicção na direção errada.</p>
+  <h3 style="margin:8mm 0 4mm">Os sinais de que algo vai mal</h3>
+  <ul class="lista">
+    <li>A entrada passou de vinte itens. Você captura e não processa.</li>
+    <li>O foco tem mais de dez dias. Você parou de dirigir.</li>
+    <li>Um projeto está parado há duas semanas. Ou morreu, ou nunca foi projeto.</li>
+    <li>Um cliente apareceu em três conversas e ainda não tem ficha.</li>
+  </ul>
+  <p class="mut" style="margin-top:4mm">O agente confere esses sinais sozinho no acerto de sexta e te avisa.</p>
+  <div class="folio"><span>IA do Jeito Seguro · Segundo Cérebro</span><span>11</span></div>
+</section>
+
+<!-- 12 · erros -->
+<section class="page">
+  <div class="num-sec">09</div>
+  <h2>Os erros que mais acontecem</h2>
+  <div class="regua"></div>
+  <p class="lead">Todos já aconteceram na construção do primeiro cofre. Cada um custou trabalho de verdade.</p>
+  <ol class="passos" style="margin-top:5mm">
+    <li><div><h3>Encher de arquivo antes da constituição</h3><p>Sem a constituição, cada arquivo sai num padrão e em duas semanas ninguém acha nada. Por isso a primeira sessão começa por ela.</p></div></li>
+    <li><div><h3>Inventar para parecer completo</h3><p>"A preencher" é honesto. Texto inventado é pior que campo vazio, porque o agente trata como verdade e você esquece que era chute.</p></div></li>
+    <li><div><h3>Pular a sexta</h3><p>Duas sextas puladas e o foco já não diz a verdade. O acerto leva trinta minutos e segura o resto.</p></div></li>
+    <li><div><h3>Deixar duas estratégias convivendo</h3><p>Quando duas anotações discordam, o agente traz as duas e pede uma decisão. Isso é achado, não defeito. Decida e registre.</p></div></li>
+    <li><div><h3>Colocar dado de cliente para "facilitar"</h3><p>Parece prático no primeiro dia e vira risco no segundo. O cliente fica no sistema de gestão. O cofre aponta onde ele está.</p></div></li>
+  </ol>
+  <div class="folio"><span>IA do Jeito Seguro · Segundo Cérebro</span><span>12</span></div>
+</section>
+
+<!-- 13 · contracapa -->
+<section class="page">
+  <svg class="nos" style="right:-26mm;bottom:22mm;width:100mm;height:100mm" viewBox="0 0 300 300" aria-hidden="true">
+    <line x1="40" y1="200" x2="130" y2="120"/><line x1="130" y1="120" x2="230" y2="160"/><line x1="130" y1="120" x2="170" y2="40"/>
+    <line x1="230" y1="160" x2="170" y2="40"/><line x1="40" y1="200" x2="150" y2="260"/><line x1="150" y1="260" x2="230" y2="160"/>
+    <circle class="cheio" cx="130" cy="120" r="9"/><circle cx="40" cy="200" r="6"/><circle cx="230" cy="160" r="7"/><circle class="cheio" cx="170" cy="40" r="5"/><circle cx="150" cy="260" r="6"/>
+  </svg>
+  <div class="rotulo">Licença e crédito</div>
+  <h2>Este modelo é seu para usar</h2>
+  <div class="regua"></div>
+  <p class="lead">O Segundo Cérebro é propriedade de Denis Ferreira e da IA do Jeito Seguro, publicado sob a licença MIT. Você pode usar e adaptar, e pode também compartilhar, desde que mantenha o aviso de autoria em toda cópia.</p>
+  <p style="margin-top:6mm" class="mut">Ao compartilhar ou ensinar a partir dele, use este crédito:</p>
+<pre>Baseado no Segundo Cérebro da IA do Jeito Seguro, criado por Denis Ferreira.
+github.com/decferreira/segundo-cerebro · Licença MIT.</pre>
+  <div class="grid2" style="margin-top:12mm">
+    <div class="card"><span class="rotulo">Quem fez</span><p><b>Denis Ferreira</b>, corretor de seguros. Montou o próprio segundo cérebro para tocar a corretora e a vida antes de ensinar alguém a montar.</p></div>
+    <div class="card"><span class="rotulo">Onde encontrar</span><p>Instagram<br><b>@soudenisferreira</b></p><p class="mut" style="margin-top:2mm">Repositório<br>github.com/decferreira/segundo-cerebro</p></div>
+  </div>
+  <p class="citacao" style="margin-top:20mm;max-width:110mm">Até mais, e vamos usar IA do jeito seguro.</p>
+  <div class="folio"><span>IA do Jeito Seguro · Segundo Cérebro · v1.0</span><span>13</span></div>
+</section>
+
+</body>
+</html>
