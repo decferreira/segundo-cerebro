@@ -1,3 +1,6 @@
+![IA do Jeito Seguro](_Sistema/marca/ia-do-jeito-seguro-horizontal-cor.svg#gh-light-mode-only)
+![IA do Jeito Seguro](_Sistema/marca/ia-do-jeito-seguro-horizontal-cor-escuro.svg#gh-dark-mode-only)
+
 # Segundo Cérebro · IA do Jeito Seguro
 
 **A memória da sua corretora, num lugar que é seu.**
@@ -113,7 +116,7 @@ segundo-cerebro/
 ├── Diario/           um arquivo por dia
 ├── Pessoas/          uma ficha por pessoa
 ├── Decisoes/         por que fizemos o que fizemos
-└── _Sistema/         rotinas, manual e ferramentas
+└── _Sistema/         rotinas, manual, logo e ferramentas
 ```
 
 ## Licença e crédito
