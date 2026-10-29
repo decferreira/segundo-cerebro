@@ -24,7 +24,7 @@ segundo-cerebro/
 ├── Diario/           um arquivo por dia
 ├── Pessoas/          uma ficha por pessoa
 ├── Decisoes/         por que fizemos o que fizemos
-└── _Sistema/         as rotinas, o manual e as ferramentas
+└── _Sistema/         as rotinas, o manual, o logo e as ferramentas
 ```
 
 ## Projeto ou área
